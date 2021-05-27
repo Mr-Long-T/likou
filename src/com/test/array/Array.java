@@ -43,9 +43,21 @@ public class Array {
 //        System.out.println(Arrays.toString(nums));
 
         //两数之和(返回目标值下标)
-        int nums[] = {2, 3, 3, 15};
-        int target = 6;
-        System.out.println(Arrays.toString(twoSum(nums, target)));
+//        int nums[] = {2, 3, 3, 15};
+//        int target = 6;
+//        System.out.println(Arrays.toString(twoSum(nums, target)));
+
+        //有效数独
+
+        //旋转数组
+//        int matrix[][] = {{5, 1, 9, 11}, {2, 4, 8, 10}, {13, 3, 6, 7}, {15, 14, 12, 16}};
+//        rotateArray(matrix);
+//        for (int i = 0; i < matrix.length; i++) {
+//            for (int j = 0; j < matrix.length; j++) {
+//                System.out.printf("%5d", matrix[i][j]);
+//            }
+//            System.out.println();
+//        }
     }
 
     public static int removeDuplicates(int[] nums) {
@@ -231,5 +243,48 @@ public class Array {
         }
         return index;
     }
+
+    public static boolean isValidSudoku(char[][] board) {
+        int len = board.length;
+        //分别构造行列单元格的二维数组 来验证行列单元格内有没有相同数字
+        //  xxx[i][num] i表示第几行/列/单元格 num表示具体值(xxx[i][num]有值则表示num已存在)
+        int row[][] = new int[len][len];
+        int column[][] = new int[len][len];
+        int cell[][] = new int[len][len];
+        for (int i = 0; i < len; i++)
+            for (int j = 0; j < len; j++) {
+                if (board[i][j] != '.') {
+                    //记录当前值 作为索引需要-1防止越界
+                    int num = board[i][j] - '0' - 1;
+                    int k = i / 3 * 3 + j / 3;
+                    if (row[i][num] != 0 || column[j][num] != 0 || cell[k][num] != 0) {
+                        return false;
+                    }
+                    row[i][num] = column[j][num] = cell[k][num] = 1;
+                }
+            }
+        return true;
+    }
+
+    public static void rotateArray(int[][] matrix) {
+        int len = matrix.length;
+        int temp = 0;
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len / 2; j++) {
+                temp = matrix[j][i];
+                matrix[j][i] = matrix[len - 1 - j][i];
+                matrix[len - 1 - j][i] = temp;
+            }
+        }
+        for (int i = 1; i < len; i++) {
+            for (int j = 0; j < i; j++) {
+                temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+    }
+
+
 }
 
