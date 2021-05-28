@@ -20,8 +20,12 @@ public class testString {
 //        System.out.println(firstUniqChar2(s));
 
         //有效的字母异位词
-        String s = "anagram", t = "nagaram";
-        System.out.println(isAnagram3(s, t));
+//        String s = "anagram", t = "nagaram";
+//        System.out.println(isAnagram3(s, t));
+
+        //验证回文串
+//        String s = "A man, a plan, a canal: Panama";
+//        System.out.println(isPalindrome2(s));
 
     }
 
@@ -108,10 +112,50 @@ public class testString {
         return Arrays.equals(sChar, tChar);
     }
     public static boolean isAnagram3(String s, String t) {
-        char[] sChar = s.toCharArray();
-        char[] tChar = t.toCharArray();
-        Arrays.sort(sChar);
-        Arrays.sort(tChar);
-        return Arrays.equals(sChar, tChar);
+        //使用一个变量count记录新出现字符的个数，然后同时遍历两个数组，如果出现了一个新的字符，
+        // count就加1，如果消失了一个字符，count就减1，最后判断count是否等于0即可
+        if (s.length() == 0 || t.length() == 0)
+            return false;
+        char[] sc = s.toCharArray();
+        char[] tc = t.toCharArray();
+        int[] map = new int[26];
+        int count = 0;
+        for (int i = 0; i < sc.length; i++) {
+            //出现了一个新的字符
+            if (++map[sc[i] - 'a'] == 1) {
+                count++;
+            }
+            //消失了一个新的字符
+            if (--map[tc[i] - 'a'] == 0) {
+                count--;
+            }
+        }
+        return count == 0;
     }
+
+    public static boolean isPalindrome(String s) {
+        if (s.length() == 0)
+            return false;
+        int left = 0, right = s.length() - 1;
+        while (left < right){
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))){
+                left++;
+            }
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right))){
+                right--;
+            }
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right)))
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+    public static boolean isPalindrome2(String s){
+        // 可以使用正则匹配，把特殊字符过滤掉，只留下字母和数字，然后转化为小写，再反转，最后在判断是否相等
+        String actual = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+        String rev = new StringBuffer(actual).reverse().toString();
+        return actual.equals(rev);
+    }
+
 }
