@@ -18,6 +18,11 @@ public class testString {
 //        String s = "loveleetcode";
 //        System.out.println(firstUniqChar(s));
 //        System.out.println(firstUniqChar2(s));
+
+        //有效的字母异位词
+        String s = "anagram", t = "nagaram";
+        System.out.println(isAnagram3(s, t));
+
     }
 
     public static void reverseString(char[] s) {
@@ -74,5 +79,39 @@ public class testString {
             if (s.indexOf(s.charAt(i)) == s.lastIndexOf(s.charAt(i)))
                 return i;
         return -1;
+    }
+
+    public static boolean isAnagram(String s, String t) {
+        if (s.length() != t.length())
+            return false;
+        int[] letterNum = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            letterNum[s.charAt(i) - 'a']++;
+        }
+        for (int j = 0; j < t.length(); j++) {
+            //优化一下，当减去字符串t中某个字符之前如果为0，直接返回false
+            if (letterNum[t.charAt(j) - 'a'] == 0)
+                return false;
+            letterNum[t.charAt(j) - 'a']--;
+        }
+//        for (int num : letterNum)
+//            if (num != 0) {
+//                return false;
+//            }
+        return true;
+    }
+    public static boolean isAnagram2(String s, String t) {
+        char[] sChar = s.toCharArray();
+        char[] tChar = t.toCharArray();
+        Arrays.sort(sChar);
+        Arrays.sort(tChar);
+        return Arrays.equals(sChar, tChar);
+    }
+    public static boolean isAnagram3(String s, String t) {
+        char[] sChar = s.toCharArray();
+        char[] tChar = t.toCharArray();
+        Arrays.sort(sChar);
+        Arrays.sort(tChar);
+        return Arrays.equals(sChar, tChar);
     }
 }
