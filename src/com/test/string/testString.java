@@ -27,6 +27,21 @@ public class testString {
 //        String s = "A man, a plan, a canal: Panama";
 //        System.out.println(isPalindrome2(s));
 
+        //实现一个 myAtoi(string s)函数，使其能将字符串转换成一个 32 位有符号整数
+//        String s = "-91283472332";
+//        String s = " ";
+//        System.out.println(myAtoi(s));
+
+        //给你两个字符串 haystack 和 needle ，请你在 haystack 字符串中找出 needle 字符串出现的第一个位置（下标从 0 开始）。如果不存在，则返回  -1 。
+//        String haystack = "hello", needle = "ll";
+//        String haystack = "aaaaa", needle = "bba";
+//        String haystack = "ddd", needle = "";
+//        String haystack = "a", needle = "a";
+//        System.out.println(strStr(haystack, needle));
+
+        //给定一个正整数 n ，输出外观数列的第 n 项
+
+
     }
 
     public static void reverseString(char[] s) {
@@ -104,6 +119,7 @@ public class testString {
 //            }
         return true;
     }
+
     public static boolean isAnagram2(String s, String t) {
         char[] sChar = s.toCharArray();
         char[] tChar = t.toCharArray();
@@ -111,6 +127,7 @@ public class testString {
         Arrays.sort(tChar);
         return Arrays.equals(sChar, tChar);
     }
+
     public static boolean isAnagram3(String s, String t) {
         //使用一个变量count记录新出现字符的个数，然后同时遍历两个数组，如果出现了一个新的字符，
         // count就加1，如果消失了一个字符，count就减1，最后判断count是否等于0即可
@@ -137,11 +154,11 @@ public class testString {
         if (s.length() == 0)
             return false;
         int left = 0, right = s.length() - 1;
-        while (left < right){
-            while (left < right && !Character.isLetterOrDigit(s.charAt(left))){
+        while (left < right) {
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
                 left++;
             }
-            while (left < right && !Character.isLetterOrDigit(s.charAt(right))){
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
                 right--;
             }
             if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right)))
@@ -151,11 +168,52 @@ public class testString {
         }
         return true;
     }
-    public static boolean isPalindrome2(String s){
+
+    public static boolean isPalindrome2(String s) {
         // 可以使用正则匹配，把特殊字符过滤掉，只留下字母和数字，然后转化为小写，再反转，最后在判断是否相等
         String actual = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
         String rev = new StringBuffer(actual).reverse().toString();
         return actual.equals(rev);
     }
+
+    public static int myAtoi(String s) {
+        char[] sc = s.trim().toCharArray();
+        if (sc.length == 0)
+            return 0;
+        int res = 0;
+        int sign = 1;
+        int index = 0;
+        if (sc[index] == '+' || sc[index] == '-') {
+            sign = sc[0] == '+' ? 1 : -1;
+            index++;
+        }
+        for (; index < sc.length; index++) {
+            int digit = sc[index] - '0';
+            if (digit < 0 || digit > 9)
+                break;
+            //越界处理
+            if (res > Integer.MAX_VALUE / 10 || (res == Integer.MAX_VALUE / 10 && digit > Integer.MAX_VALUE % 10))
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            else
+                res = res * 10 + digit;
+        }
+        return res * sign;
+    }
+
+    public static int strStr(String haystack, String needle) {
+//        return haystack.indexOf(needle);
+        int needlen = needle.length();
+        int hayslen = haystack.length();
+        int Diff = hayslen - needlen + 1;
+        for (int i = 0; i < Diff; i++){
+            if (haystack.substring(i , i + needlen).equals(needle)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+//    public static String countAndSay(int n) {
+//    }
 
 }
