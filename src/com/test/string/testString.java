@@ -40,8 +40,11 @@ public class testString {
 //        System.out.println(strStr(haystack, needle));
 
         //给定一个正整数 n ，输出外观数列的第 n 项
+//        System.out.println(countAndSay(5));
 
-
+        //查找字符串数组中的最长公共前缀。
+//        String[] strs = {"flower", "flow", "flight"};
+//        System.out.println(longestCommonPrefix(strs));
     }
 
     public static void reverseString(char[] s) {
@@ -205,15 +208,48 @@ public class testString {
         int needlen = needle.length();
         int hayslen = haystack.length();
         int Diff = hayslen - needlen + 1;
-        for (int i = 0; i < Diff; i++){
-            if (haystack.substring(i , i + needlen).equals(needle)){
+        for (int i = 0; i < Diff; i++) {
+            if (haystack.substring(i, i + needlen).equals(needle)) {
                 return i;
             }
         }
         return -1;
     }
 
-//    public static String countAndSay(int n) {
-//    }
+    public static String countAndSay(int n) {
+        if (n == 1)
+            return "1";
+        String strN = countAndSay(n - 1);
+        int count = 0;
+        char indexVal = strN.charAt(0);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < strN.length(); i++) {
+            if (indexVal == strN.charAt(i)) {
+                count++;
+            } else {
+                sb.append(count);
+                sb.append(indexVal);
+                count = 1;
+                indexVal = strN.charAt(i);
+            }
+        }
+        sb.append(count);
+        sb.append(indexVal);
+        return sb.toString();
+    }
+
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0)
+            return "";
+        String cp = strs[0];
+        int i = 1;
+        while (i < strs.length) {
+            while (strs[i].indexOf(cp) != 0) {
+                cp = cp.substring(0, cp.length()-1);
+            }
+            i++;
+        }
+        return cp;
+    }
 
 }
