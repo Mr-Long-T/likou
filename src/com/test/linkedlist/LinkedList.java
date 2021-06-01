@@ -54,4 +54,56 @@ public class LinkedList {
 
     }
 
+    //合并两个有序链表
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1==null){
+            return l2;
+        }else if(l2==null){
+            return l1;
+        }
+        ListNode newNode = new ListNode(0);
+        ListNode temp = newNode;
+        while(l1!=null&&l2!=null){
+            if(l1.val<=l2.val){
+                temp.next = l1;
+                l1 = l1.next;
+            }else{
+                temp.next = l2;
+                l2 = l2.next;
+            }
+            temp = temp.next;
+        }
+        temp.next = l1 == null? l2:l1;
+        return newNode.next;
+    }
+
+    // 回文链表
+    public boolean isPalindrome(ListNode head) {
+        ListNode tp = head;
+        Stack<ListNode> stack = new Stack<>();
+        while(tp!=null){
+            stack.push(tp);
+            tp = tp.next;
+        }
+        while(head!=null){
+            if(head!=stack.pop())
+                return false;
+            head = head.next;
+        }
+        return true;
+    }
+
+    //给定一个链表，判断链表中是否有环。
+    public boolean hasCycle(ListNode head) {
+        //慢指针，慢指针针每次走一步，快指针每次走两步，如果相遇就说明有环，如果有一个为空说明没有环。
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast!=null&&fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(slow==fast)
+                return true;
+        }
+        return false;
+    }
 }
